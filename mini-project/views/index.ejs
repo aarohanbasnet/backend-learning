@@ -4,20 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>mini project</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/stylesheets/style.css">
 
 </head>
 <body>
     <div class="w-full h-full bg-zinc-900 p-10 text-white">
+        <div class="nav mb-10">
+            <a class="text-blue-500" href="/read">Read Users</a>
+        </div>
         <h1 class="text-3xl tracking-tighter mb-3">Create User</h1>
-        <form action="" class="flex flex-col gap-4">
-    <input class="pl-4 pr-5 py-3 bg-transparent border-2 border-zinc-800 rounded-lg outline-none" type="text" placeholder="Name">
-    <input class="pl-4 pr-5 py-3 bg-transparent border-2 border-zinc-800 rounded-lg outline-none" type="text" placeholder="Email">
-    <input class="pl-4 pr-5 py-3 bg-transparent border-2 border-zinc-800 rounded-lg outline-none" type="text" placeholder="Image URL">
-    <input class="px-5 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 transition-colors cursor-pointer mt-2" type="submit" value="Create User">
-</form>
-
+        <form action ="/create" method ="post">
+            <input class="px-5 py-3 bg-transparent border-2 border-zinc-800 rounded-lg outline-none"  type="text" name="name" placeholder="name">
+            <input class="px-5 py-3 bg-transparent border-2 border-zinc-800 rounded-lg outline-none"  type="text" name="email" placeholder="email">
+            <input class="px-5 py-3 bg-transparent border-2 border-zinc-800 rounded-lg outline-none"  type="text" name="image" placeholder="image url">
+            <input class="px-5 py-3 bg-blue-500 rounded-lg ml-3" type="submit" value="Create User">
+        </form>
     </div>
     <script src ="javascripts/script.js"></script>
 </body>
