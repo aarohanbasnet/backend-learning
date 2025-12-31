@@ -32,6 +32,26 @@ app.get("/remove-visit", (req,res)=>{
     res.send("SESSION REMOVED");
 });
 
+app.get("/login",(req,res)=>{
+    req.session.user = "Toasted Avacado";
+    res.send("Logged In succesfully");
+});
+
+app.get("/profile",(req, res)=>{
+    if(req.session.user){
+    res.send(`welcome ${req.session.user}`);
+    }else {
+        res.send("Please create a profile first");
+    }
+});
+
+
+app.get("/logout",(req,res)=>{
+    req.session.destroy();
+    res.send("Logged out successfully");
+})
+
+
 
 app.listen(PORT, ()=>{
     console.log(`server is running in http://localhost:${PORT}`);
