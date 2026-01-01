@@ -1,9 +1,13 @@
 
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const PORT = 3000;
+
+app.use(cookieParser());
 
 app.get("/", (req,res)=>{
     bcrypt.genSalt(10, function(err, salt) {
@@ -22,6 +26,25 @@ bcrypt.compare("testPasswo@d", "$2b$10$.R8KaX1YAF3K3VQHlEP01OTqsLrUFFIOHei0IJJvx
     res.send(result);
 });
 })
+
+//token
+app.get("/jwt",(req,res)=>{
+    let token = jwt.sign({email : "testmail@gmail.com"}, "secret");
+    res.cookie("token", token);
+    console.log(token);
+    res.send('check');
+    
+});
+
+
+//verification
+app.get("/read", (req,res)=>{
+    let data = jwt.verify(req.cookies.token, "secret");
+    console.log(data);
+    res.send("sent to server");
+});
+
+
 
 app.listen(PORT, ()=>{
     console.log(`server is running in http://localhost:${PORT}`);
