@@ -3,6 +3,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const userModel = require('./models/usermodel');
 
 const PORT = 3000;
 const app = express();
@@ -19,7 +20,7 @@ app.use(cookieParser());
 app.get("/", (req,res)=>{
     res.render("index");
 });
-
+ 
 app.listen(PORT, ()=>{
     console.log(`server is running in http://localhost:${PORT}`);
-})
+});
