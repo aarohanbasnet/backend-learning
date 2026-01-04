@@ -35,13 +35,37 @@ app.post("/create", (req,res)=>{
                 age
             });
 
-        res.send(createdUser);
+           
+            res.send(createdUser);
         });
     }) ;
 
 
 });
 
+app.get("/logout", (req,res)=>{
+    res.cookie("token", "");
+    res.redirect("/");
+});
+
+app.get("/login", (req,res)=>{
+    res.render("login");
+})
+
+app.post("/login", async (req,res)=>{
+    let user = await userModel.findOne({email : req.body.email});
+    if(!user) return res.send("credentials doesn't match");
+    bcrypt.compare(req.body.password, user.password,(err, result)=>{
+        if(result){
+             let token = jwt.sign({email : user.email},"granted");
+            res.cookie("token", token);
+            res.send("Logged in succesfully");
+        }else {
+            res.send("Something is wrong");
+        }
+    })
+
+})
  
 app.listen(PORT, ()=>{
     console.log(`server is running in http://localhost:${PORT}`);
