@@ -5,7 +5,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const userModel = require('./models/usermodel');
 const bcrypt = require('bcrypt');
-const usermodel = require('./models/usermodel');
+
 
 const PORT = 3000;
 const app = express();
