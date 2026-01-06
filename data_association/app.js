@@ -22,6 +22,21 @@ app.get("/create",async function(req,res){
 })
 
 
+app.get("/create/post", async(req,res)=>{
+
+    let post = await postModel.create({
+        postdata : "Hello my first post",
+        user : "695d53dcc9d5b46486841e52"
+    })
+
+    let user = await userModel.findOne({_id : "695d53dcc9d5b46486841e52"});
+    user.posts.push(post._id);
+    await user.save();
+    res.send({post, user});
+
+})
+
+
 app.listen(PORT, ()=>{
     console.log(`server is running in http://localhost:${PORT}`);
 });
