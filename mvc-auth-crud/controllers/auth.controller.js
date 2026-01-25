@@ -1,6 +1,7 @@
 const userModel = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const {hash, compare} = require('../utils/bcryptUtils');
+const {generateToken, verifyToken} = require('../utils/generateToken');
 
 module.exports.register = async function(req,res){
     try{
@@ -22,6 +23,9 @@ module.exports.register = async function(req,res){
         email,
         password :hashedPassword
     });
+
+    const token = generateToken(user);
+    res.cookie('token', token);
 
     return res.status(200).json({
         success : true,
@@ -65,13 +69,14 @@ module.exports.login = async function(req,res){
         message : "invalid credientials"
     });
 
+    const token = generateToken(user);
+    res.cookie("token", token);
+    
     return res.status(201).json({
         success : true,
         message : "you can login"
     });
 
-
-    //JWT HERE 
 
     } catch(error){
         return res.status(400).json({
