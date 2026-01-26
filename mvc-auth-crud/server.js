@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/connection');
 const noteRoutes = require('./routes/notes.routes');
 const authRoutes = require('./routes/auth.routes');
@@ -10,6 +11,8 @@ const app =express();
 
 connectDB(); //database connection
 app.use(express.json());
+app.use(express.urlencoded({extended : true}));
+app.use(cookieParser());
 
 //API routes
 app.use('/notes', noteRoutes);
