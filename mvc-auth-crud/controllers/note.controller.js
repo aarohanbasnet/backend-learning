@@ -37,7 +37,7 @@ module.exports.readNotes = async function(req,res){
             .populate('user', "email name -_id")
             .sort({createdAt : -1});
 
-            return res.status(200).json({
+            return res.status(201).json({
                 success : true,
                 data : {
                     notes : notes
@@ -50,4 +50,43 @@ module.exports.readNotes = async function(req,res){
             message : error.message
         })
     }
-}
+};
+
+module.exports.editNotes = async function(req,res){
+    try{
+
+     const noteId = req.params.noteId;
+     const {content, title} = req.body;
+     const updatedNote =  await noteModel.findOneAndUpdate(
+        {
+            _id : noteId,
+            user : req.user.id
+        },
+        {title, content},
+        {
+            new : true,
+            runValidators : true
+        }
+      );
+
+      if(!updatedNote){
+        return res.status(404).json({
+            success : false,
+            message : "Note not found"
+        });
+      }
+
+      return res.status(200).json({
+        success  : true,
+        message : "Note updated successfully",
+        note : updatedNote
+      })
+     
+
+    }catch(error){
+        return res.status(500).json({
+            success : false,
+            message : error.message
+        })
+    }
+};
