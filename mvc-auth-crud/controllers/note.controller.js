@@ -90,3 +90,31 @@ module.exports.editNotes = async function(req,res){
         })
     }
 };
+
+module.exports.deleteNotes = async function(req, res){
+    try{
+        const noteId = req.params.noteId;
+        const deletedNote = await noteModel.findByIdAndDelete({
+        _id : noteId,
+        user : req.user.id
+    });
+
+    if(!deletedNote){
+        return res.status(404).json({
+            success : false,
+            message : "Note not found or unauthorized"
+        });
+    };
+
+    return res.status(200).json({
+        success : true,
+        message : "Note deleted successfully"
+    });
+
+    } catch (error) {
+        return res.status(500).json({
+            success : false,
+            message : error.message,
+        });
+    }
+}
