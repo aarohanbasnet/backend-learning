@@ -32,9 +32,8 @@ module.exports.createNotes = async function(req,res){
 module.exports.readNotes = async function(req,res){
     try{
         const notes = await noteModel.find({
-            user : req.user.id
             })
-            .populate('user', "email name -_id")
+            .populate('user', "name -_id")
             .sort({createdAt : -1});
 
             return res.status(201).json({

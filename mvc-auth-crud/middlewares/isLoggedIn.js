@@ -1,4 +1,4 @@
-const {verifyToken, generateToken} = require('../utils/generateToken');
+const {verifyToken} = require('../utils/generateToken');
 
 module.exports.isLoggedIn = function(req, res, next){
     try{

@@ -4,7 +4,7 @@ const {isLoggedIn} = require('../middlewares/isLoggedIn');
 const router = express.Router();
 
 router.post('/create', isLoggedIn, createNotes);
-router.get('/read', isLoggedIn, readNotes);
+router.get('/read', readNotes);
 router.put('/edit/:noteId', isLoggedIn, editNotes);
 router.delete('/delete/:noteId', isLoggedIn, deleteNotes);
 
