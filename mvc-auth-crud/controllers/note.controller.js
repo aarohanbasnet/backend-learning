@@ -116,4 +116,25 @@ module.exports.deleteNotes = async function(req, res){
             message : error.message,
         });
     }
+};
+
+module.exports.readNotesByUser = async function(req, res){
+    try{
+        const id = req.user.id;
+        const notes = await noteModel.find({
+            user : id
+        }).populate("user", "name -_id");
+
+        return res.status(200).json({
+            success : true,
+            data : notes
+            
+        })
+    } catch(error){
+        return res.status(500).json({
+            success : false,
+            message : error.message
+        })
+        
+    }
 }
