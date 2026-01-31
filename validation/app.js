@@ -13,7 +13,10 @@ app.get('/', (req,res)=>{
 });
 
 app.get('/register',(req, res)=>{
-    res.render('register');
+    res.render('register', {
+        errors : errors.array(),
+        old : req.body
+    });
 });
 
 app.post('/register',[
