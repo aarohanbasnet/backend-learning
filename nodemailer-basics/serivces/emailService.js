@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 
 const sendEmail = async function(targetEmail, subject, message){
     try{
-        const info = transporter.sendMail({
+        const info = await transporter.sendMail({
             from : '"Jody DuBuque" <intern@company.com>',
             to : targetEmail,
             subject : subject,
@@ -21,7 +21,7 @@ const sendEmail = async function(targetEmail, subject, message){
             html : `<b>${message}</b>`
         });
 
-        console.log("Message sent : %s", (await info).messageId);
+        console.log("Message sent : %s", info.messageId);
         console.log("Preview URL : %s", nodemailer.getTestMessageUrl(info));
 
         return info;
