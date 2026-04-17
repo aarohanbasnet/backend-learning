@@ -31,3 +31,14 @@ const loginService = async ({email, password}) => {
 
     return { accessToken, refreshToken };
 };
+
+const refreshService = async (refreshToken) =>{
+    const stored = await Token.findOne({ token : refreshToken });
+    if(!stored) throw new Error("Invalid refresh token");
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+    const newAccessToken = generateAccessToken({_id : stored.userId});
+    return { accessToken : newAccessToken };
+}
+
+module.exports = {loginService, registerService, refreshService};
