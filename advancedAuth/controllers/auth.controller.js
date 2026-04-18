@@ -1,14 +1,14 @@
 const bcrypt = require("bcrypt");
 const userModel = require("../models/user.model");
+const {loginService, registerService, refreshService} = require("../services/auth.service")
 
 const login = async(req, res)=>{
-try{
-    const {email, password} = req.body;
-    const user = await userModel.findOne({email});
-    if(!user) return res.status(400).json({msg : "User not found"});
-} catch (error){
-
-}
-    
-
-}
+    try{
+    const result = await loginService(req.body);
+    res.json(result);
+    } catch (err) {
+        res.status(400).json({
+            message : err.message
+        });
+    }
+};
