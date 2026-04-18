@@ -1,5 +1,3 @@
-const bcrypt = require("bcrypt");
-const userModel = require("../models/user.model");
 const {loginService, registerService, refreshService} = require("../services/auth.service")
 
 const register = async(req, res)=>{
