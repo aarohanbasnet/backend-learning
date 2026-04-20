@@ -23,3 +23,18 @@ const login = async(req, res)=>{
     }
 };
 
+const refresh = async(req, res)=>{
+    try{
+        const {refreshToken} = req.body;
+        const result = await refreshService(refreshToken);
+        res.json(result);
+        
+    } catch(err) {
+        res.status(403).json({
+            message : err.message
+        });
+    }
+}
+
+module.exports = {register, login, refresh};
+
