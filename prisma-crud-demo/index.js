@@ -30,6 +30,24 @@ app.post('/users', async( req, res)=>{
 });
 
 
+app.get("/users", async(req, res)=> {
+    try{
+        const users = await prisma.user.findMany();
+        res.status(200).json({
+            success : true,
+            message : "User fetched successfully",
+            data : users,
+        });
+    } catch(err){
+        res.status(500).json({
+            success : false,
+            message : err.message,
+            data : null,
+        });
+    }
+})
+
+
 app.listen(3000, ()=>{
     console.log("server running on port 3000");
 });
