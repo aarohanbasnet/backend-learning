@@ -83,6 +83,27 @@ app.get('/users/:id', async(req, res)=>{
 });
 
 
+//UPDATE 
+app.put('/users/:id', async(req, res)=>{      //put for all changes patch for partial changes
+    try{
+        const {name, email, age} =req.body;
+        const user = await prisma.user.update({
+            where : { id : req.params.id},
+             data : {name, email, age }
+        });
+      res.status(200).json({
+        success : true,
+        message : "User updated successfully",
+        data : user,
+      }) ;
+    }catch(err){
+        res.status(500).json({
+            success : false,
+            message : err.message,
+            data : null,
+        });
+    }
+});
 //DELETE 
 app.delete('/users/:id', async(req, res)=>{
     try{
