@@ -9,6 +9,8 @@ const prisma = new PrismaClient({adapter});
 const app = express();
 app.use(express.json());
 
+
+//CREATE USER
 app.post('/users', async( req, res)=>{
     try{
         const {name, email, age} = req.body;
@@ -30,6 +32,8 @@ app.post('/users', async( req, res)=>{
 });
 
 
+
+//GET ALL USERS
 app.get("/users", async(req, res)=> {
     try{
         const users = await prisma.user.findMany();
@@ -47,6 +51,55 @@ app.get("/users", async(req, res)=> {
     }
 })
 
+
+
+//GET SINGLE USER
+app.get('/users/:id', async(req, res)=>{
+    try{
+        const user = await prisma.user.findUnique({
+        where : {id : req.params.id },
+    });
+
+    if(!user){
+        return res.status(404).json({
+            success : false,
+            message : 'User not found',
+            data : null,
+        });
+    }
+
+    res.status(200).json({
+        success : true,
+        message : ' User fetched successfully',
+        data : user,
+    });
+    } catch (err){
+        res.status(500).json({
+            success : false,
+            message : err.message,
+            data : null,
+        })
+    }
+});
+
+
+//DELETE 
+app.delete('/users/:id', async(req, res)=>{
+    try{
+        await prisma.user.delete({where : { id : req.params.id}});
+        res.status(200).json({
+            success : true,
+            message : "User deleted successfully",
+            data : null,
+        });
+    } catch (err) {
+        res.status(400).json({
+            success : false,
+            message : err.message,
+            data : null,
+        });
+    }
+});
 
 app.listen(3000, ()=>{
     console.log("server running on port 3000");
