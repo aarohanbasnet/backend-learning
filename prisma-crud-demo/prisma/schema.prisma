@@ -18,4 +18,15 @@ model User {
   email String @unique
   age Int
   createdAt DateTime @default(now())
+
+  posts Post[]
+}
+
+
+model Post {
+  id String @id @default(uuid())
+  title String
+  content String
+  authorId String  //Foreign key colum this will be column
+  author User @relation(fields: [authorId], references: [id])
 }

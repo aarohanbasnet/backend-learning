@@ -122,6 +122,33 @@ app.delete('/users/:id', async(req, res)=>{
     }
 });
 
+
+//IMPLEMENTING REFERENCING
+app.post('/posts', async (req, res)=>{
+    try{
+        const {title, content, authorId} = req.body;
+        const post = await prisma.post.create({
+            data : {
+                title,
+                content,
+                authorId,
+            },
+        });
+
+        res.status(201).json({
+            success : true,
+            message : "Post created successfully",
+            data : post,
+        });
+    }catch (err){
+        res.status(500).json({
+            success : false,
+            message : err.message,
+            data :null,
+        });
+    }
+})
+
 app.listen(3000, ()=>{
     console.log("server running on port 3000");
 });
