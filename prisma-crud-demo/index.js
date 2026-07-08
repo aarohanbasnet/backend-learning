@@ -149,6 +149,32 @@ app.post('/posts', async (req, res)=>{
     }
 })
 
+
+
+//GET ALL POSTS
+app.get("/posts", async(req, res)=>{
+    try{
+        const posts = await prisma.post.findMany({
+            include : {
+                author : true,
+            }
+        });
+        res.status(200).json({
+            success : true,
+            message : "Posts fetched successfully",
+            data : posts
+        });
+
+    } catch(err){
+        res.status(500).json({
+            success: false,
+            message: err.message,
+            data: null
+        });
+    };
+});
+
+
 app.listen(3000, ()=>{
     console.log("server running on port 3000");
 });
